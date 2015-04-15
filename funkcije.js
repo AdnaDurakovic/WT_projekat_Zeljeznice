@@ -179,7 +179,6 @@ function validiraj() {
 	
 	if (validno==false) {
 		alert(poruka);
-		location.reload();
 	}
 	else {
 		var slika1 = document.getElementById("eror_name");
