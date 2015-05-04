@@ -370,7 +370,7 @@ body {
     display: inline-block;
 }
 
-#eror_name, #eror_email, #eror_poruka, #eror_email_potvrda {
+#eror_name, #eror_email, #eror_poruka, #eror_email_potvrda, #eror_cityno, #eror_city {
     display: none;
 }
 

@@ -110,6 +110,7 @@ function Funkcija53()
 	}
 }
 
+
 function validirajEmail(email) {
 	var emailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;  
 	if(email.value.match(emailformat))  
@@ -121,6 +122,7 @@ function validirajEmail(email) {
 		return false;  
 	}  
 }
+
 
 function validiraj() {
 	var validno = true;
@@ -176,6 +178,115 @@ function validiraj() {
 		document.formica.myname.focus();
 	}
 
+
+	// validacija poštanskog broja i mjesta putem Ajaxa
+	var mj = document.formica.mjesto.value;
+	var ptbr = document.formica.ptbroj.value;
+	var xmlhttp = new XMLHttpRequest();
+
+	// polja grad iptbroj nisu obavezna, ali ako se unese jedno(grad/ptbroj) mora se unijeti i drugo(ptbroj/grad)
+
+	if(mj.length == 0 && ptbr.length != 0) 
+	{
+		poruka = poruka + '  - Unesite mjesto za uneseni poštanski broj\r\n';
+		var slika = document.getElementById("eror_city");
+		slika.style.display = "inline";
+		validno = false;
+
+		xmlhttp.onreadystatechange = function()
+		{
+			if(xmlhttp.readyState == 4 && xmlhttp.status == 200)
+			{
+				var obj = JSON.parse(xmlhttp.responseText);
+
+				// ako je unesen nepostojeći ptbroj
+				if(obj.hasOwnProperty("greska") && obj.greska == "Nepostojeći poštanski broj")
+				{
+					alert(poruka + '  - ' + objj.greska + '\r\n');
+					return false;
+				}
+				// kada se ne unese mjesto javlja se greška da je mjesto nepostojeće
+				else if(obj.hasOwnProperty("greska") && obj.greska == "Nepostojeće mjesto")
+				{
+					alert(poruka + '  - ' + obj.greska + '\r\n');
+					return false;				
+				}
+
+				
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 404)
+    		    {
+       	       		console.log("Pogrešan URL!");
+       	     	}
+			}
+		}
+		
+	}
+
+	else if(ptbr.length == 0 && mj.length != 0)
+	{
+		poruka = poruka + '  - Unesite poštanski broj za uneseno mjesto\r\n';
+		var slika = document.getElementById("eror_cityno");
+		slika.style.display = "inline";
+		validno = false;
+
+		xmlhttp.onreadystatechange = function()
+		{
+			if(xmlhttp.readyState == 4 && xmlhttp.status == 200)
+			{
+				var obj = JSON.parse(xmlhttp.responseText);
+
+				// ako je unesen nepostojeći grad
+				if(obj.hasOwnProperty("greska") && obj.greska == "Nepostojeće mjesto")
+				{
+					alert(poruka + '  - ' + obj.greska + '\r\n');
+					return false;
+				}
+				// kada se ne unese ptbroj javlja se greška da je ptbroj nepostojeći
+				else if(obj.hasOwnProperty("greska") && obj.greska == "Nepostojeći poštanski broj")
+				{
+					alert(poruka + '  - ' + obj.greska + '\r\n');
+					return false;
+				}
+				
+				
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 404)
+    		    {
+       	       		console.log("Pogrešan URL!");
+       	     	}
+			}
+		}
+	}
+	
+	else if(mj.length != 0 && ptbr.length != 0)
+	{
+		xmlhttp.onreadystatechange = function()
+		{
+			if(xmlhttp.readyState == 4 && xmlhttp.status == 200)
+			{
+				var obj = JSON.parse(xmlhttp.responseText);
+				if(obj.hasOwnProperty("greska") && obj.greska == "Poštanski broj ne odgovara mjestu")
+				{
+					alert(poruka + '  - ' + obj.greska + '\r\n');
+					return false;
+				}
+				else if(obj.hasOwnProperty("ok") && obj.ok == "Poštanski broj odgovara mjestu")
+				{
+					alert(obj.ok);
+				}
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 404)
+    		    {
+       	       		console.log("Pogrešan URL!");
+       	     	}
+			}
+		}
+	}
+
+	mj = encodeURIComponent(mj);
+	ptbr = encodeURIComponent(ptbr);
+	var url = 'http://zamger.etf.unsa.ba/wt/postanskiBroj.php?mjesto='+mj+'&postanskiBroj='+ptbr;
+	xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+
 	
 	if (validno==false) {
 		alert(poruka);
@@ -184,9 +295,74 @@ function validiraj() {
 		var slika1 = document.getElementById("eror_name");
 		var slika2 = document.getElementById("eror_email");
 		var slika3 = document.getElementById("eror_poruka");
+		var slika4 = document.getElementById("eror_cityno");
+		var slika4 = document.getElementById("eror_city");
 		slika1.style.display = "none";
 		slika2.style.display = "none";
 		slika3.style.display = "none";
+		slika4.style.display = "none";
+		slika5.style.display = "none";
 	}
 
+}
+
+
+function funkcijaHome() {
+	var ajax = new XMLHttpRequest();
+        ajax.onreadystatechange = function() {// Anonimna funkcija
+                if (ajax.readyState == 4 && ajax.status == 200)
+                        document.getElementById("tijelo").innerHTML = ajax.responseText;
+                if (ajax.readyState == 4 && ajax.status == 404)
+                        document.getElementById("tijelo").innerHTML = "Greska: nepoznat URL";
+        }
+    ajax.open("GET", "home.html", true);
+    ajax.send();
+}
+
+function funkcijaNews() {
+	var ajax = new XMLHttpRequest();
+        ajax.onreadystatechange = function() {// Anonimna funkcija
+                if (ajax.readyState == 4 && ajax.status == 200)
+                        document.getElementById("tijelo").innerHTML = ajax.responseText;
+                if (ajax.readyState == 4 && ajax.status == 404)
+                        document.getElementById("tijelo").innerHTML = "Greska: nepoznat URL";
+        }
+    ajax.open("GET", "news.html", true);
+    ajax.send();
+}
+
+function funkcijaRoutes() {
+	var ajax = new XMLHttpRequest();
+        ajax.onreadystatechange = function() {// Anonimna funkcija
+                if (ajax.readyState == 4 && ajax.status == 200)
+                        document.getElementById("tijelo").innerHTML = ajax.responseText;
+                if (ajax.readyState == 4 && ajax.status == 404)
+                        document.getElementById("tijelo").innerHTML = "Greska: nepoznat URL";
+        }
+    ajax.open("GET", "routes.html", true);
+    ajax.send();
+}
+
+function funkcijaContact() {
+	var ajax = new XMLHttpRequest();
+        ajax.onreadystatechange = function() {// Anonimna funkcija
+                if (ajax.readyState == 4 && ajax.status == 200)
+                        document.getElementById("tijelo").innerHTML = ajax.responseText;
+                if (ajax.readyState == 4 && ajax.status == 404)
+                        document.getElementById("tijelo").innerHTML = "Greska: nepoznat URL";
+        }
+    ajax.open("GET", "contact.html", true);
+    ajax.send();
+}
+
+function funkcijaAbout() {
+		var ajax = new XMLHttpRequest();
+        ajax.onreadystatechange = function() {// Anonimna funkcija
+                if (ajax.readyState == 4 && ajax.status == 200)
+                        document.getElementById("tijelo").innerHTML = ajax.responseText;
+                if (ajax.readyState == 4 && ajax.status == 404)
+                        document.getElementById("tijelo").innerHTML = "Greska: nepoznat URL";
+        }
+    ajax.open("GET", "about.html", true);
+    ajax.send();
 }
