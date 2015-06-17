@@ -11,7 +11,7 @@ function rest_get($request, $data)
 
     try
     {
-        $request = new PDO("mysql:dbname=tut9;host=localhost;charset=utf8", "root", "root");
+        $request = new PDO("mysql:dbname=proba;host=127.8.163.2;charset=utf8", "adminhygNSs5", "UfXHKXHCqhEE");
     }
     catch(PDOException $e)
     {

@@ -2,7 +2,7 @@
 
   try 
   {
-    $veza = new PDO("mysql:dbname=zeljeznicesoultrain;host=127.6.189.2;charset=utf8", "adminnlc33pY", "RHuwlgvvVQat");
+    $veza = new PDO("mysql:dbname=proba;host=127.8.163.2;charset=utf8", "adminhygNSs5", "UfXHKXHCqhEE");
     $veza->exec("set names utf8");
   }
   catch (PDOException $ex)

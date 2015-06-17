@@ -37,7 +37,7 @@
                 $username = htmlentities($username);
                 $pass = htmlentities($pass);
                         
-                $veza = new PDO("mysql:dbname=tut9;host=localhost;charset=utf8", "root", "root");
+                $veza = new PDO("mysql:dbname=proba;host=127.8.163.2;charset=utf8", "adminhygNSs5", "UfXHKXHCqhEE");
                 $veza->exec("set names utf8");
                         
                 $sql = "SELECT * FROM admin WHERE username=:user AND password=:pass";
