@@ -1,5 +1,4 @@
-
- <div id ="tijelo">   
+<div id = "tijelo">
  <body>    
         <div class="content">  
             <p>Kontakt</p>
@@ -17,10 +16,15 @@
                 <h1>Telefon</h1>
                 <h2>061 000 008</h2>
                 <br>
-                <form name = "formica" action="#" onSubmit="return validiraj()">
+                <div class = "required">* Obavezna polja</div>
+                <br>
+                <br>
+                <!-- <form name = "formica" action="#" onSubmit="return validiraj()"> -->
+                <form name = "formica" action="contact.php" method="post">
                     <p id = "ime">Ime i prezime:
                         <br>
                         <input type="text" name="firstname">
+                        <span class="required">*</span>
                         <img id = "eror_name" src = "https://cdn0.iconfinder.com/data/icons/shift-free/32/Error-16.png" alt="error">
                     </p>
 
@@ -39,12 +43,14 @@
                     <p id = "email">Email:
                         <br>
                         <input type="text" name="email">
+                        <span class="required">*</span>
                         <img id = "eror_email" src = "https://cdn0.iconfinder.com/data/icons/shift-free/32/Error-16.png" alt="error">
                     </p>
 
                     <p id = "emailpotvrda">Potvrdi Email:
                         <br>
                         <input type="text" name="emailpotvrda">
+                        <span class="required">*</span>
                         <img id = "eror_email_potvrda" src = "https://cdn0.iconfinder.com/data/icons/shift-free/32/Error-16.png" alt="error">
                     </p>
                     
@@ -56,11 +62,16 @@
                     <p id = "poruka">Poruka:
                         <br>
                         <textarea rows="10" cols="50" name="myname"></textarea>
+                        <span class="required">*</span>
                         <img id = "eror_poruka" src = "https://cdn0.iconfinder.com/data/icons/shift-free/32/Error-16.png" alt="error">
                     </p>
 
                     <p id = "button-submit">
-                        <button type="submit" value="Submit">Pošalji</button>
+                        <button name ="send" type="submit" value="Submit">Pošalji</button>
+                    </p>
+
+                    <p id= "button-reset">
+                        <button name="reset" type="reset" value="Reset">Resetuj</button>
                     </p>
                 </form>
             </div>
